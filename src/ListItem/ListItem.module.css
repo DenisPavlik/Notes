@@ -1,0 +1,19 @@
+.body {
+  width: 25%;
+}
+
+.body_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.body_inner button {
+  border: none;
+  border-radius: 10px;
+}
+
+.body_inner img {
+  width: 30px;
+  padding: 5px 10px;
+}

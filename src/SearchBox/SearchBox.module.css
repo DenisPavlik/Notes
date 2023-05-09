@@ -1,0 +1,21 @@
+.body {
+  width: 30%;
+}
+
+.body_inner {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0 0 0 50px;
+  border-radius: 10px;
+}
+
+.body_inner img {
+  width: 20px;
+}
+
+.body_inner input {
+  padding: 10px;
+  width: 70%;
+  border: none;
+}
