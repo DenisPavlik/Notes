@@ -11,6 +11,13 @@
 .body_inner button {
   border: none;
   border-radius: 10px;
+  background: #F0F0F0;
+}
+
+.body_inner button:hover {
+  cursor: pointer;
+  background: #E0E0E0;
+  transition: 0.2s;
 }
 
 .body_inner img {

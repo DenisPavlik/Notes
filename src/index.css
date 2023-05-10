@@ -21,3 +21,7 @@ header {
   align-items: center;
   justify-content: space-between;
 }
+
+main {
+  display: flex;
+}

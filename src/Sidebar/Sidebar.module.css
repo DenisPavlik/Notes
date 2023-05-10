@@ -1,0 +1,50 @@
+.body {
+  width: 30%;
+  border-right: 1px solid #f0f0f0;
+  max-height: 800px;
+  min-height: 700px;
+  overflow-y: scroll;
+}
+
+.body_inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  padding: 10px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.note:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.title {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.info {
+  display: flex;
+  white-space: nowrap;
+}
+
+.info p {
+  margin: 0;
+}
+
+.date {
+  padding-right: 10px;
+}
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
