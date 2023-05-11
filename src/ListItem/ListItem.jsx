@@ -4,16 +4,16 @@ import deleteIcon from '../img/delete.png'
 import editIcon from '../img/edit.png'
 import style from './ListItem.module.css'
 
-const ListItem = () => {
+const ListItem = (props) => {
   return (
     <div className={style.body}>
       <div className={style.body_inner}>
-        <button><img src={addIcon} alt="add" /></button>
-        <button><img src={deleteIcon} alt="delete" /></button>
-        <button><img src={editIcon} alt="edit" /></button>
+        <button onClick={props.handleAdd}><img src={addIcon} alt="add" /></button>
+        <button onClick={props.handleDelete}><img src={deleteIcon} alt="delete" /></button>
+        <button onClick={props.handleEdit}><img src={editIcon} alt="edit" /></button>
       </div>
     </div>
   )
 }
 
-export default ListItem
+export default ListItem;
