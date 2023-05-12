@@ -11,12 +11,17 @@
 .body_inner button {
   border: none;
   border-radius: 10px;
-  background: #F0F0F0;
+  background: #f0f0f0;
+}
+
+button:disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
 }
 
 .body_inner button:hover {
   cursor: pointer;
-  background: #E0E0E0;
+  background: #e0e0e0;
   transition: 0.2s;
 }
 

@@ -4,14 +4,15 @@ import SearchBox from "./SearchBox/SearchBox.jsx";
 import Sidebar from "./Sidebar/Sidebar.jsx";
 import Workspace from "./Workspace/Workspace.jsx";
 import { createCollectionsInIndexedDB, idb } from "./indexedDB.js";
+import ModalDelete from "./ModalDelete.jsx/ModalDelete.jsx";
 
 const App = () => {
   const [input, setInput] = useState(``);
   const [edit, setEdit] = useState(false);
   const [allNotesData, setAllNotesData] = useState([]);
   const [selectedNote, setSelectedNote] = useState({});
-
-
+  const [toggleModal, setToggleModal] = useState(false)
+  
   let title = input.split("\n")[0];
   let innerText = input.split("\n")[1];
 
@@ -20,6 +21,28 @@ const App = () => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
+  const handleSetID = (id) => {
+    let res = allNotesData.filter((note) => note.id === id);
+    setSelectedNote(res[0]);
+    setInput(res[0].input)
+  };
+
+  const handleInput = (text) => {
+    setInput(text);
+  };
+
+  const confirmDeleting = () => {
+    if (Object.keys(selectedNote).length === 0) {
+      alert("Please, choose a note, wich you want to delete")
+      return
+    }
+    setToggleModal(true)
+  }
+
+  const handlToggl = () => {
+    setToggleModal(false)
+  }
 
   useEffect(() => {
     createCollectionsInIndexedDB();
@@ -50,16 +73,6 @@ const App = () => {
         db.close();
       };
     };
-  };
-
-  const handleSetID = (id) => {
-    let res = allNotesData.filter((note) => note.id === id);
-    setSelectedNote(res[0]);
-    setInput(res[0].input)
-  };
-
-  const handleInput = (text) => {
-    setInput(text);
   };
 
   const handleAdd = () => {
@@ -131,19 +144,21 @@ const App = () => {
 
   const handleDelete = () => {
     const dbPromise = idb.open("notes-db", 2);
-
     dbPromise.onsuccess = () => {
       const db = dbPromise.result;
 
       const tx = db.transaction("noteData", "readwrite");
 
       const noteData = tx.objectStore("noteData");
+
       const deletedNote = noteData.delete(selectedNote.id);
       
 
       deletedNote.onsuccess = () => {
         console.log('Note deleted');
         getAllData();
+        setToggleModal(false)
+        setInput(``)
       };
 
       deletedNote.onerror = () => {
@@ -156,10 +171,14 @@ const App = () => {
     };
   };
 
-  return (
+  if (toggleModal) {
+    return <ModalDelete handleDelete={handleDelete} handlToggl={handlToggl} />
+  }
+
+  return ( 
     <div>
       <header>
-        <ListItem handleEdit={handleEdit} handleAdd={handleAdd} handleDelete={handleDelete} />
+        <ListItem handleEdit={handleEdit} handleAdd={handleAdd} confirmDeleting={confirmDeleting} allNotesData={allNotesData} />
         <SearchBox />
       </header>
       <main>

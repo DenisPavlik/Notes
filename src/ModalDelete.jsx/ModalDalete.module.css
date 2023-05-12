@@ -1,0 +1,33 @@
+.body {
+  position: absolute;
+  background-color: #DCDCDC;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.body h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.buttons button {
+  padding: 10px;
+  width: 40%;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.buttons button:hover {
+  cursor: pointer;
+}
