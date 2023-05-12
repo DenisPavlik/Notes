@@ -11,8 +11,9 @@ const App = () => {
   const [edit, setEdit] = useState(false);
   const [allNotesData, setAllNotesData] = useState([]);
   const [selectedNote, setSelectedNote] = useState({});
-  const [toggleModal, setToggleModal] = useState(false)
-  
+  const [toggleModal, setToggleModal] = useState(false);
+  const [query, setQuery] = useState("");
+
   let title = input.split("\n")[0];
   let innerText = input.split("\n")[1];
 
@@ -25,7 +26,7 @@ const App = () => {
   const handleSetID = (id) => {
     let res = allNotesData.filter((note) => note.id === id);
     setSelectedNote(res[0]);
-    setInput(res[0].input)
+    setInput(res[0].input);
   };
 
   const handleInput = (text) => {
@@ -34,15 +35,15 @@ const App = () => {
 
   const confirmDeleting = () => {
     if (Object.keys(selectedNote).length === 0) {
-      alert("Please, choose a note, wich you want to delete")
-      return
+      alert("Please, choose a note, wich you want to delete");
+      return;
     }
-    setToggleModal(true)
-  }
+    setToggleModal(true);
+  };
 
   const handlToggl = () => {
-    setToggleModal(false)
-  }
+    setToggleModal(false);
+  };
 
   useEffect(() => {
     createCollectionsInIndexedDB();
@@ -78,7 +79,6 @@ const App = () => {
   const handleAdd = () => {
     const dbPromise = idb.open("notes-db", 2);
     dbPromise.onsuccess = () => {
-      
       const db = dbPromise.result;
 
       const tx = db.transaction("noteData", "readwrite");
@@ -87,10 +87,10 @@ const App = () => {
 
       const notes = noteData.put({
         id: allNotesData.length + 1,
-        title: '',
+        title: "",
         time,
-        innerText: '',
-        input: '',
+        innerText: "",
+        input: "",
       });
 
       notes.onsuccess = () => {
@@ -139,7 +139,6 @@ const App = () => {
         console.log("Error occured");
       };
     };
-    
   };
 
   const handleDelete = () => {
@@ -152,13 +151,12 @@ const App = () => {
       const noteData = tx.objectStore("noteData");
 
       const deletedNote = noteData.delete(selectedNote.id);
-      
 
       deletedNote.onsuccess = () => {
-        console.log('Note deleted');
+        console.log("Note deleted");
         getAllData();
-        setToggleModal(false)
-        setInput(``)
+        setToggleModal(false);
+        setInput(``);
       };
 
       deletedNote.onerror = () => {
@@ -172,17 +170,26 @@ const App = () => {
   };
 
   if (toggleModal) {
-    return <ModalDelete handleDelete={handleDelete} handlToggl={handlToggl} />
+    return <ModalDelete handleDelete={handleDelete} handlToggl={handlToggl} />;
   }
 
-  return ( 
+  return (
     <div>
       <header>
-        <ListItem handleEdit={handleEdit} handleAdd={handleAdd} confirmDeleting={confirmDeleting} allNotesData={allNotesData} />
-        <SearchBox />
+        <ListItem
+          handleEdit={handleEdit}
+          handleAdd={handleAdd}
+          confirmDeleting={confirmDeleting}
+          allNotesData={allNotesData}
+        />
+        <SearchBox query={query} setQuery={setQuery} />
       </header>
       <main>
-        <Sidebar allNotesData={allNotesData} handleSetID={handleSetID} />
+        <Sidebar
+          allNotesData={allNotesData}
+          handleSetID={handleSetID}
+          query={query}
+        />
         <Workspace
           input={input}
           handleInput={handleInput}
