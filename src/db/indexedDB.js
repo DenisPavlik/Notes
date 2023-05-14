@@ -11,8 +11,6 @@ export const createCollectionsInIndexedDB = () => {
     return;
   }
 
-  // console.log(idb);
-
   const request = idb.open("notes-db", 2);
 
   request.onerror = (event) => {

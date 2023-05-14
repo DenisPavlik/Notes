@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import style from "./ModalDalete.module.css";
-import { AppContext } from "../App";
+import { AppContext } from "../context";
 
 const ModalDelete = () => {
   const {handlToggl, handleDelete} = useContext(AppContext);

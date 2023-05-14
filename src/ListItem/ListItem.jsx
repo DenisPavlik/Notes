@@ -3,7 +3,7 @@ import addIcon from "../img/add.png";
 import deleteIcon from "../img/delete.png";
 import editIcon from "../img/edit.png";
 import style from "./ListItem.module.css";
-import { AppContext } from "../App";
+import { AppContext } from "../context";
 
 const ListItem = () => {
   const {allNotesData, handleEdit, handleAdd, confirmDeleting} = useContext(AppContext);

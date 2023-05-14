@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import style from "./Sidebar.module.css";
-import { AppContext } from "../App";
+import { AppContext } from "../context";
 
-const Sidebar = (props) => {
-  const {allNotesData, handleSetID, query} = useContext(AppContext);
+const Sidebar = () => {
+  const { allNotesData, handleSetID, query } = useContext(AppContext);
 
   return (
     <div className={style.body}>
@@ -12,9 +12,7 @@ const Sidebar = (props) => {
           .filter((e) => {
             if (query === "") {
               return e;
-            } else if (
-              e.title.toLowerCase().includes(query.toLowerCase())
-            ) {
+            } else if (e.title.toLowerCase().includes(query.toLowerCase())) {
               return e;
             } else {
               return "";

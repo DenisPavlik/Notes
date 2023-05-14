@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import style from "./SearchBox.module.css";
 import searchIcon from "../img/search.png";
-import { AppContext } from "../App";
+import { AppContext } from "../context";
 
 const SearchBox = () => {
   const { querry, setQuery } = useContext(AppContext);

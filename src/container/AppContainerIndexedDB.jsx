@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import ListItem from "./ListItem/ListItem.jsx";
-import SearchBox from "./SearchBox/SearchBox.jsx";
-import Sidebar from "./Sidebar/Sidebar.jsx";
-import Workspace from "./Workspace/Workspace.jsx";
-import { createCollectionsInIndexedDB, idb } from "./indexedDB.js";
-import ModalDelete from "./ModalDelete.jsx/ModalDelete.jsx";
+import { createCollectionsInIndexedDB, idb } from "../db/indexedDB.js";
+import App from "../App.jsx";
+import { AppContext } from "../context.js";
 
-export const AppContext = React.createContext();
-
-const App = () => {
+const AppContainerIndexedDB = () => {
   const [input, setInput] = useState(``);
   const [edit, setEdit] = useState(false);
   const [allNotesData, setAllNotesData] = useState([]);
@@ -181,6 +176,7 @@ const App = () => {
     allNotesData,
     selectedNote,
     query,
+    toggleModal,
     handleAdd,
     handleEdit,
     confirmDeleting,
@@ -191,28 +187,11 @@ const App = () => {
     handlToggl,
   };
 
-  if (toggleModal) {
-    return (
-      <AppContext.Provider value={value}>
-        <ModalDelete />
-      </AppContext.Provider>
-    );
-  }
-
   return (
     <AppContext.Provider value={value}>
-      <div>
-        <header>
-          <ListItem />
-          <SearchBox />
-        </header>
-        <main>
-          <Sidebar />
-          <Workspace />
-        </main>
-      </div>
+      <App />
     </AppContext.Provider>
   );
 };
 
-export default App;
+export default AppContainerIndexedDB;
