@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./SearchBox.module.css";
 import searchIcon from "../img/search.png";
+import { AppContext } from "../App";
 
-const SearchBox = (props) => {
+const SearchBox = () => {
+  const { querry, setQuery } = useContext(AppContext);
+
   return (
     <div className={style.body}>
       <div className={style.body_inner}>
@@ -10,8 +13,8 @@ const SearchBox = (props) => {
         <input
           type="text"
           placeholder="Serach"
-          value={props.querry}
-          onChange={(e) => props.setQuery(e.target.value)}
+          value={querry}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
     </div>

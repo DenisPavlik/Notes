@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "./ListItem/ListItem.jsx";
 import SearchBox from "./SearchBox/SearchBox.jsx";
 import Sidebar from "./Sidebar/Sidebar.jsx";
 import Workspace from "./Workspace/Workspace.jsx";
 import { createCollectionsInIndexedDB, idb } from "./indexedDB.js";
 import ModalDelete from "./ModalDelete.jsx/ModalDelete.jsx";
+
+export const AppContext = React.createContext();
 
 const App = () => {
   const [input, setInput] = useState(``);
@@ -109,6 +111,10 @@ const App = () => {
   };
 
   const handleEdit = () => {
+    if (Object.keys(selectedNote).length === 0) {
+      alert("Please, choose a note, wich you want to edit");
+      return;
+    }
     setEdit(!edit);
     const dbPromise = idb.open("notes-db", 2);
     dbPromise.onsuccess = () => {
@@ -131,7 +137,7 @@ const App = () => {
           db.close();
         };
         getAllData();
-        console.log("Note added");
+        console.log("Note edited");
       };
 
       notes.onerror = (event) => {
@@ -169,36 +175,43 @@ const App = () => {
     };
   };
 
+  const value = {
+    input,
+    edit,
+    allNotesData,
+    selectedNote,
+    query,
+    handleAdd,
+    handleEdit,
+    confirmDeleting,
+    handleSetID,
+    handleInput,
+    setQuery,
+    handleDelete,
+    handlToggl,
+  };
+
   if (toggleModal) {
-    return <ModalDelete handleDelete={handleDelete} handlToggl={handlToggl} />;
+    return (
+      <AppContext.Provider value={value}>
+        <ModalDelete />
+      </AppContext.Provider>
+    );
   }
 
   return (
-    <div>
-      <header>
-        <ListItem
-          handleEdit={handleEdit}
-          handleAdd={handleAdd}
-          confirmDeleting={confirmDeleting}
-          allNotesData={allNotesData}
-        />
-        <SearchBox query={query} setQuery={setQuery} />
-      </header>
-      <main>
-        <Sidebar
-          allNotesData={allNotesData}
-          handleSetID={handleSetID}
-          query={query}
-        />
-        <Workspace
-          input={input}
-          handleInput={handleInput}
-          edit={edit}
-          handleEdit={handleEdit}
-          selectedNote={selectedNote}
-        />
-      </main>
-    </div>
+    <AppContext.Provider value={value}>
+      <div>
+        <header>
+          <ListItem />
+          <SearchBox />
+        </header>
+        <main>
+          <Sidebar />
+          <Workspace />
+        </main>
+      </div>
+    </AppContext.Provider>
   );
 };
 

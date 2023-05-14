@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./Workspace.module.css";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { AppContext } from "../App";
 
-const Workspace = (props) => {
+const Workspace = () => {
+  const {input, handleInput, edit, handleEdit} = useContext(AppContext);
+
   return (
     <div className={style.body}>
       <div className={style.body_inner}>
-        {props.edit ? (
+        {edit ? (
           <textarea
             autoFocus
             className={style.textarea}
-            value={props.input}
+            value={input}
             onChange={(e) => {
-              props.handleInput(e.target.value)
+              handleInput(e.target.value)
             }}
-            onBlur={props.handleEdit}
+            onBlur={handleEdit}
           />
         ) : (
-          <ReactMarkdown children={props.input} className={style.markdown} />
+          <ReactMarkdown children={input} className={style.markdown} />
         )}
       </div>
     </div>

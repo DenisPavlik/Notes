@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./Sidebar.module.css";
+import { AppContext } from "../App";
 
 const Sidebar = (props) => {
+  const {allNotesData, handleSetID, query} = useContext(AppContext);
+
   return (
     <div className={style.body}>
       <div className={style.body_inner}>
-        {props.allNotesData
+        {allNotesData
           .filter((e) => {
-            if (props.query === "") {
+            if (query === "") {
               return e;
             } else if (
-              e.title.toLowerCase().includes(props.query.toLowerCase())
+              e.title.toLowerCase().includes(query.toLowerCase())
             ) {
               return e;
             } else {
@@ -21,7 +24,7 @@ const Sidebar = (props) => {
             return (
               <div
                 onClick={() => {
-                  props.handleSetID(e.id);
+                  handleSetID(e.id);
                 }}
                 className={style.note}
                 key={e.id}
